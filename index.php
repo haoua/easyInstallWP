@@ -26,7 +26,7 @@
 	</div>
 
 	<div class="container-fluid">
-		<form class="needs-validation" action="controllers/install.php" novalidate>
+		<form class="needs-validation" method="post" action="controllers/install.php" novalidate>
 		  	<div class="form-row">
 		    	<div class="col-md-3 mb-3">
 		      		<input type="text" class="form-control" id="validationTooltip01" placeholder="Nom du site" name="nomSite" required>
@@ -68,19 +68,19 @@
 
 		  	<div class="form-row">
 		  		<div class="col-md-3 mb-3">
-		      		<input type="text" class="form-control" id="validationTooltip02" placeholder="BDD - Nom" name="userAdmin" required>
+		      		<input type="text" class="form-control" id="validationTooltip02" placeholder="Admin - Nom" name="userAdmin" required>
 		      		<div class="valid-tooltip">
 		        		Looks good!
 		      		</div>
 		    	</div>
 		    	<div class="col-md-3 mb-3">
-		      		<input type="email" class="form-control" id="validationTooltip06" placeholder="BDD - Username" name="userEmail" required>
+		      		<input type="email" class="form-control" id="validationTooltip06" placeholder="Admin - Email" name="userEmail" required>
 		      		<div class="valid-tooltip">
 		        		Looks good!
 		      		</div>
 		    	</div>
 		    	<div class="col-md-3 mb-3">
-		      		<input type="password" class="form-control" id="validationTooltip06" placeholder="BDD - Password" name="userPassword" required>
+		      		<input type="password" class="form-control" id="validationTooltip06" placeholder="Admin - Password" name="userPassword" required>
 		      		<div class="valid-tooltip">
 		        		Looks good!
 		      		</div>
