@@ -13,7 +13,7 @@ $userPassword = (!empty($_POST["userPassword"])) ? $_POST["userPassword"] : "000
 
 $enableWpDebug = ($_POST["enableWpDebug"] == 1) ? true : false;
 $langue = (in_array($_POST["langue"], array("fr_FR", "en_EN", "en_US"))) ? $_POST["langue"] : "fr_FR";
-$url = "localhost/".$nomSite;
+$url = "192.168.33.10/".$nomSite;
 
 // S'il y a des plugins / themes à installer
 $telechargement_plugin1 = (!empty($_POST["plugin1"])) ? 'php /var/www/html/module/controllers/wp-cli.phar plugin install ' . $_POST["plugin1"] . ' --activate' : "";
@@ -46,16 +46,17 @@ $creationDB = 'php /var/www/html/module/controllers/wp-cli.phar db create';
 // Génération du mot de passe s'il est vide
 if ($userPassword == "") {
     $characteresAutorises = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    $password = substr(str_shuffle($characteresAutorises), 0, 12);
+    $userPassword = substr(str_shuffle($characteresAutorises), 0, 12);
 }
 
 // Commande d'installation
-$commandeInstallation = 'php /var/www/html/module/controllers/wp-cli.phar core install --url=' . $url . ' --title="' . $nomSite . '" --admin_user=' . $userAdmin . ' --admin_email=' . $userEmail . ' --admin_password=' . $password;
+$commandeInstallation = 'php /var/www/html/module/controllers/wp-cli.phar core install --url=' . $url . ' --title="' . $nomSite . '" --admin_user=' . $userAdmin . ' --admin_email=' . $userEmail . ' --admin_password=' . $userPassword;
 
 $retour = array();
 $retourComplet = array();
 
-chdir('/var/www/html');
+exec('mkdir /var/www/html/' . $nomSite);
+chdir('/var/www/html/'.$nomSite);
 exec("mysql -uroot -proot -e 'CREATE USER \"".$dbUser."\"@\"localhost\" IDENTIFIED BY \"".$dbPass."\"; GRANT ALL PRIVILEGES ON *.* TO \"".$dbUser."\"@\"localhost\" WITH GRANT OPTION; CREATE USER \"".$dbUser."\"@'%' IDENTIFIED BY \"".$dbPass."\"; GRANT ALL PRIVILEGES ON *.* TO \"".$dbUser."\"@\"%\" WITH GRANT OPTION; FLUSH PRIVILEGES;' 2>/dev/null", $retour);
 exec($telechargementInitiale_part1, $retour);
 exec($telechargementInitiale_part2, $retour);
@@ -88,4 +89,4 @@ if (!empty($telechargement_theme4)) {
     exec($telechargement_theme4);
 }
 
-echo 1;
+echo $nomSite;

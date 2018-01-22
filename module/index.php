@@ -6,11 +6,26 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<style>
+		.navbar-brand {
+			color:'#0c3440' !important;
+		}
+		#loader {
+			display:none;
+			width: 100%;
+			height: 43vh;
+			text-align: center;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
 </head>
+
 <body style="font-family: 'Montserrat', sans-serif;">
 	<nav class="navbar navbar-light bg-light">
 	  <a class="navbar-brand" href="#">
-	    <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+	    <img src="logo.png" width="32" height="32" class="d-inline-block align-top" alt="">
 	    Wordpress - Installation
 	  </a>
 	</nav>
@@ -19,13 +34,13 @@
 		<h1 style="padding-top: 12%">Installer WordPress n'a jamais été aussi facile.</h1>
 	</div>
 
-	<div class="container" style="margin-top: 2em; margin-bottom: 2em;">
+	<div class="container" id="crayon" style="margin-top: 2em; margin-bottom: 2em;">
 		<center>
 			<i class="fa fa-pencil fa-3x" aria-hidden="true"></i>
 		</center>
 	</div>
 
-	<div class="container-fluid">
+	<div class="container-fluid" id="sectionFormulaire">
 		<form class="needs-validation" novalidate>
 		  	<div class="form-row">
 		    	<div class="col-md-3 mb-3">
@@ -66,25 +81,25 @@
 		  		</div>
 
 		    	<div class="col-md-2 mb-3">
-		      		<input class="form-check-input" type="checkbox" name="theme1" value="hestia.1.1.59" style="position: relative; margin: 0; margin-top: 0.7em;">
+		      		<input class="form-check-input" type="checkbox" name="theme1" value="hestia" style="position: relative; margin: 0; margin-top: 0.7em;">
 				  	<label class="form-check-label">
 				    	Hestia
 				  	</label>
 		    	</div>
 		    	<div class="col-md-2 mb-3">
-		      		<input class="form-check-input" value="one-page-express.1.0.11" type="checkbox" name="theme2" id="defaultCheck2" style="position: relative; margin: 0; margin-top: 0.7em;">
+		      		<input class="form-check-input" value="one-page-express" type="checkbox" name="theme2" id="defaultCheck2" style="position: relative; margin: 0; margin-top: 0.7em;">
 				  	<label class="form-check-label" for="defaultCheck2">
 				    	One Page Express
 				  	</label>
 		    	</div>
 		    	<div class="col-md-2 mb-3">
-		      		<input class="form-check-input" type="checkbox" name="theme3" id="defaultCheck3" value="shop-isle.1.1.38" style="position: relative; margin: 0; margin-top: 0.7em;">
+		      		<input class="form-check-input" type="checkbox" name="theme3" id="defaultCheck3" value="shop-isle" style="position: relative; margin: 0; margin-top: 0.7em;">
 				  	<label class="form-check-label" for="defaultCheck3">
 				    	Shop Isle
 				  	</label>
 		    	</div>
 		    	<div class="col-md-2 mb-3">
-		      		<input class="form-check-input" type="checkbox" name="theme4" id="defaultCheck4" value="wallstreet.1.7.8" style="position: relative; margin: 0; margin-top: 0.7em;">
+		      		<input class="form-check-input" type="checkbox" name="theme4" id="defaultCheck4" value="wallstreet" style="position: relative; margin: 0; margin-top: 0.7em;">
 				  	<label class="form-check-label" for="defaultCheck4">
 				    	Wallstreet
 				  	</label>
@@ -128,22 +143,28 @@
 		</form>
 	</div>
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+	<div id="loader">
+		<i class="fa fa-spinner fa-spin fa-fw fa-3x" style="color:#14576A;"></i>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		$("#btnCreer").click(function(e) {
 			e.preventDefault();
+			
+			$("#sectionFormulaire, #crayon").hide();
+			$("#loader").show().css('display', 'flex');
+
 			var data = $("form").serialize();
 			$.ajax({
 		       url : "controllers/install.php",
-		       type : 'POST', // Le type de la requête HTTP, ici devenu POST
+		       type : 'POST',
 		       data : data,
-		       dataType : 'json',
+		       dataType : 'text',
 		       success: function(result) {
-		       	if (parseInt(result) == 1) {
-		       		window.location.href = "/";
-		       	}
+		       	window.location.href = "/" + result;
 		       }
 			})
 		});
