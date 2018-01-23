@@ -4,7 +4,7 @@
 $nomSite = (!empty($_POST["nomSite"])) ? $_POST["nomSite"] : "wordpress";
 
 $dbName = (!empty($_POST["dbName"])) ? $_POST["dbName"] : "wp";
-$dbUser = (!empty($_POST["dbUser"]) || $_POST["dbUser"] == "root") ? $_POST["dbUser"] : "wproot";
+$dbUser = (!empty($_POST["dbUser"]) && $_POST["dbUser"] != "root") ? $_POST["dbUser"] : "wproot";
 $dbPass = (!empty($_POST["dbPass"])) ? $_POST["dbPass"] : "0000";
 
 $userAdmin = (!empty($_POST["userAdmin"])) ? $_POST["userAdmin"] : "root";
